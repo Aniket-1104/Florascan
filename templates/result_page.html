@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--=============== FAVICON ===============-->
+        <link rel="shortcut icon" href="static/img/favicon.png" type="image/x-icon">
+
+        <!--=============== REMIX ICONS ===============-->
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+        <!--=============== CSS ===============-->
+        <link rel="stylesheet" href="static/css/styles.css">
+        <link rel="stylesheet" href="static/css/card.sass">
+
+        <title>FloraScan</title>
+    </head>
+    <body>
+        <!--==================== HEADER ====================-->
+        <header class="header" id="header">
+            <nav class="nav container">
+                <a href="http://127.0.0.1:5000" class="nav__logo">
+                    <i class="ri-leaf-line nav__logo-icon"></i> FloraScan
+                </a>
+
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item">
+                            <a href="http://127.0.0.1:5000/#home" class="nav__link active-link">Home</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="http://127.0.0.1:5000/#about" class="nav__link">About</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="http://127.0.0.1:5000/#faqs" class="nav__link">FAQs</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="http://127.0.0.1:5000/#contact" class="nav__link">Contact Us</a>
+                        </li>
+                    </ul>
+
+                    <div class="nav__close" id="nav-close">
+                        <i class="ri-close-line"></i>
+                    </div>
+                </div>
+
+                <div class="nav__btns">
+                    <!-- Theme change button -->
+                    <i class="ri-moon-line change-theme" id="theme-button"></i>
+
+                    <div class="nav__toggle" id="nav-toggle">
+                        <i class="ri-menu-line"></i>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="main">
+            <!--==================== HOME ====================-->
+             <section class="home" id="home">
+                <div class="home__container container grid">
+                    <img src="static/img/home.png" alt="" class="home__img">
+
+                    <div class="home__data">
+                        <h1 class="home__title">
+                            Plants will make <br> your life better
+                        </h1>
+                        <p class="home__description">
+                            Get to know about the different medicinal plants and their various properties
+                            just by uploading a picture. Keep exploring!!
+                        </p>
+                        <form method="post" enctype="multipart/form-data">
+                            <input type="file" name="file" class="form-control-file" onchange="preview_image(event)" required > 
+                            <button id="uploadBtn" type="submit" class="button button--flex">
+                                Predict <i class="ri-arrow-right-down-line button__icon"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="home__social">
+                        <span class="home__social-follow">Follow Us</span>
+
+                        <div class="home__social-links">
+                            <a href="https://www.facebook.com/" target="_blank" class="home__social-link">
+                                <i class="ri-facebook-fill"></i>
+                            </a>
+                            <a href="https://www.instagram.com/" target="_blank" class="home__social-link">
+                                <i class="ri-instagram-line"></i>
+                            </a>
+                            <a href="https://twitter.com/" target="_blank" class="home__social-link">
+                                <i class="ri-twitter-fill"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section> 
+
+            <!--==================== Plant detail card ====================-->
+            <section class="steps section container">
+                <div class="steps__bg">
+                    <h2 class="section__title-center steps__title">
+                        Let us know about <br> your plant
+                    </h2>
+                    <div class="result">
+                        <div class="cardContainer inactive">
+                            <div class="card">
+                            <div class="side front">
+                                <img class="img img1" src="static/img/output.png" alt="">
+                                <div class="info">
+                                <h2>{{details["plant_name"]}}</h2>
+                                <p style="color: green;">Accuracy : {{prob}} %</p>
+                                <div class="btn" id="learn_more_btn">
+                                    <h4>Learn More</h4>
+                                    <svg fill="#333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/><path d="M0-.25h24v24H0z" fill="none"/></svg>
+                            </div>
+                                </div>
+                                
+                            </div>
+                            <div class="side back">
+                                <div class="info">
+                                <h2>At a glance</h2>
+                                <ul>
+                                    <li><b>Medical content :</b> {{details["medicine_content"]}} </li>
+                                    <li><b>Disease cured :</b>{{ ", ".join(details["diseases_cured"]) }}</li>
+                                    <li><b>Age Restriction : </b>{{ details["age_restrictions"] }}</li>
+                                    <li><b>Gender Restrction :</b> {{ details["gender_restrictions"] }} </li>
+                                    <li><b>Pregnant use restriction :</b> {{ details["pregnant_use_restriction"] }}</li>
+                                    <li><b>Mode of use :</b> {{ details["mode_of_use"] }}</li>
+                                    <li><b>Doses for day :</b> {{details["doses_for_day"] }}</li>
+                                </ul>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        
+
+        <!--==================== FOOTER ====================-->
+        <footer class="footer section">
+            <div class="footer__container container grid">
+                <div class="footer__content">
+                    <a href="#" class="footer__logo">
+                        <i class="ri-leaf-line footer__logo-icon"></i> FloraScan
+                    </a>
+
+                    <h3 class="footer__title">
+                        Subscribe to our newsletter <br> to stay update
+                    </h3>
+
+                    <div class="footer__subscribe">
+                        <input type="email" placeholder="Enter your email" class="footer__input">
+
+                        <button class="button button--flex footer__button">
+                            Subscribe
+                            <i class="ri-arrow-right-up-line button__icon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="footer__content">
+                    <h3 class="footer__title">Our Address</h3>
+
+                    <ul class="footer__data">
+                        <li class="footer__information">Yelahanka New Town</li>
+                        <li class="footer__information">Bangalore - 560064</li>
+                        <li class="footer__information">Karnataka, India</li>
+                    </ul>
+                </div>
+
+                <div class="footer__content">
+                    <h3 class="footer__title">Contact Us</h3>
+
+                    <ul class="footer__data">
+                        <li class="footer__information">+91 9876543210</li>
+                        
+                        <div class="footer__social">
+                            <a href="https://www.facebook.com/" class="footer__social-link">
+                                <i class="ri-facebook-fill"></i>
+                            </a>
+                            <a href="https://www.instagram.com/" class="footer__social-link">
+                                <i class="ri-instagram-line"></i>
+                            </a>
+                            <a href="https://twitter.com/" class="footer__social-link">
+                                <i class="ri-twitter-fill"></i>
+                            </a>
+                        </div>
+                    </ul>
+                </div>
+
+                <div class="footer__content">
+                    <h3 class="footer__title">
+                        We accept all credit cards
+                    </h3>
+
+                    <div class="footer__cards">
+                        <img src="static/img/card1.png" alt="" class="footer__card">
+                        <img src="static/img/card2.png" alt="" class="footer__card">
+                        <img src="static/img/card3.png" alt="" class="footer__card">
+                        <img src="static/img/card4.png" alt="" class="footer__card">
+                    </div>
+                </div>
+            </div>
+
+            <p class="footer__copy">&#169; FloraScan. All rigths reserved</p>
+        </footer>
+        
+        <!--=============== SCROLL UP ===============-->
+        <a href="#" class="scrollup" id="scroll-up"> 
+            <i class="ri-arrow-up-fill scrollup__icon"></i>
+        </a>
+        
+        
+        <script src="static/js/scrollreveal.min.js"></script>
+        
+        <!--=============== MAIN JS ===============-->
+        <script src="static/js/main.js"></script>
+    </body>
+    </html>
